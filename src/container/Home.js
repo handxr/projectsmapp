@@ -4,17 +4,20 @@ import { AiFillCloseCircle } from "react-icons/ai";
 import { Link, Route, Routes } from "react-router-dom";
 
 import { Sidebar, UserProfile } from "../components";
-import Pins from "./Pins";
 import { userQuery } from "../utils/data";
 import { client } from "../client";
+import Pins from "./Pins";
 import logo from "../assets/logo.png";
-import { fetchUser } from "../utils/fetchUser";
 
 const Home = () => {
   const [toggleSidebar, setToggleSidebar] = useState(false);
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState();
   const scrollRef = useRef(null);
-  const userInfo = fetchUser();
+
+  const userInfo =
+    localStorage.getItem("user") !== "undefined"
+      ? JSON.parse(localStorage.getItem("user"))
+      : localStorage.clear();
 
   useEffect(() => {
     const query = userQuery(userInfo?.googleId);
@@ -26,11 +29,11 @@ const Home = () => {
 
   useEffect(() => {
     scrollRef.current.scrollTo(0, 0);
-  }, []);
+  });
 
   return (
     <div className="flex bg-gray-50 md:flex-row flex-col h-screen transition-height duration-75 ease-out">
-      <div className="hidden md:flex h-screen flex-initial ">
+      <div className="hidden md:flex h-screen flex-initial">
         <Sidebar user={user && user} />
       </div>
       <div className="flex md:hidden flex-row">
@@ -60,7 +63,7 @@ const Home = () => {
                 onClick={() => setToggleSidebar(false)}
               />
             </div>
-            <Sidebar user={user && user} closeToggle={setToggleSidebar} />
+            <Sidebar closeToggle={setToggleSidebar} user={user && user} />
           </div>
         )}
       </div>

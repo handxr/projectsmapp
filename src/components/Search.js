@@ -26,6 +26,8 @@ const Search = ({ searchTerm }) => {
     }
   }, [searchTerm]);
 
+
+
   return (
     <div>
 
