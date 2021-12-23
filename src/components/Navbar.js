@@ -8,6 +8,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
   if (!user) return null;
 
   
+  
 
   return (
     <div className="flex gap-2 md:gap-5 w-full mt-5 pb-7">
@@ -16,7 +17,7 @@ const Navbar = ({ searchTerm, setSearchTerm, user }) => {
         <input
           type="text"
           id="test"
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => setSearchTerm(e.target.value.trim())}
           placeholder="Search"
           value={searchTerm}
           onFocus={() => navigate("/search")}
